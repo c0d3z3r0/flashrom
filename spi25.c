@@ -26,6 +26,7 @@
 #include "chipdrivers.h"
 #include "programmer.h"
 #include "spi.h"
+#include "spi25.h"
 
 enum id_type {
 	RDID,
@@ -472,7 +473,7 @@ static int spi_chip_erase_62(struct flashctx *flash)
 	return spi_simple_write_cmd(flash, JEDEC_CE_62, 100 * 1000);
 }
 
-static int spi_chip_erase_c7(struct flashctx *flash)
+int spi_chip_erase_c7(struct flashctx *flash)
 {
 	/* This usually takes 1-85s, so wait in 1s steps. */
 	return spi_simple_write_cmd(flash, JEDEC_CE_C7, 1000 * 1000);

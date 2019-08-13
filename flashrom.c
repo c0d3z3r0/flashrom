@@ -39,6 +39,7 @@
 #include "programmer.h"
 #include "hwaccess.h"
 #include "chipdrivers.h"
+#include "spi25.h"
 
 const char flashrom_version[] = FLASHROM_VERSION;
 const char *chip_to_probe = NULL;
@@ -1853,23 +1854,6 @@ _free_ret:
 	return ret;
 }
 
-/**
- * @brief Erases the included layout regions.
- *
- * If there is no layout set in the given flash context, the whole chip will
- * be erased.
- *
- * @param flashctx Flash context to be used.
- * @param buffer   Buffer of full chip size to read into.
- * @return 0 on success,
- *	   1 if all available erase functions failed.
- */
-static int erase_by_layout(struct flashctx *const flashctx)
-{
-	struct walk_info info = { 0 };
-	return walk_by_layout(flashctx, &info, &erase_block);
-}
-
 static int read_erase_write_block(struct flashctx *const flashctx,
 				  const struct walk_info *const info, const erasefn_t erasefn)
 {
@@ -2415,7 +2399,7 @@ int flashrom_flash_erase(struct flashctx *const flashctx)
 	if (prepare_flash_access(flashctx, false, false, true, false))
 		return 1;
 
-	const int ret = erase_by_layout(flashctx);
+	const int ret = spi_chip_erase_c7(flashctx);
 
 	finalize_flash_access(flashctx);
 
