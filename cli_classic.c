@@ -568,7 +568,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	if (chipcount > 1) {
+	if (chipcount > 1 && flashes[chipcount-1].chip->model_id != SFDP_DEVICE_ID) {
 		msg_cinfo("Multiple flash chip definitions match the detected chip(s): \"%s\"",
 			  flashes[0].chip->name);
 		for (i = 1; i < chipcount; i++)

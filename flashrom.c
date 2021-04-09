@@ -1262,28 +1262,8 @@ int probe_flash(struct registered_master *mst, int startchip, struct flashctx *f
 		 * one for this programmer interface (master) and thus no other chip has
 		 * been found on this interface.
 		 */
-		if (startchip == 0 && flash->chip->model_id == SFDP_DEVICE_ID) {
-			msg_cinfo("===\n"
-				  "SFDP has autodetected a flash chip which is "
-				  "not natively supported by flashrom yet.\n");
-			if (count_usable_erasers(flash) == 0)
-				msg_cinfo("The standard operations read and "
-					  "verify should work, but to support "
-					  "erase, write and all other "
-					  "possible features");
-			else
-				msg_cinfo("All standard operations (read, "
-					  "verify, erase and write) should "
-					  "work, but to support all possible "
-					  "features");
-
-			msg_cinfo(" we need to add them manually.\n"
-				  "You can help us by mailing us the output of the following command to "
-				  "flashrom@flashrom.org:\n"
-				  "'flashrom -VV [plus the -p/--programmer parameter]'\n"
-				  "Thanks for your help!\n"
-				  "===\n");
-		}
+		if (flash->chip->model_id == SFDP_DEVICE_ID)
+			break;
 
 		/* First flash chip detected on this bus. */
 		if (startchip == 0)
