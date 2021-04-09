@@ -47,9 +47,9 @@ BUILD_DETAILS_FILE ?= build_details.txt
 # values are those specified in enum programmer in programmer.h (which depend on other CONFIG_* options
 # evaluated below, namely those that enable/disable the various programmers).
 # Compilation will fail for unspecified values.
-CONFIG_DEFAULT_PROGRAMMER ?= PROGRAMMER_INVALID
+CONFIG_DEFAULT_PROGRAMMER ?= PROGRAMMER_FT2232_SPI
 # The following adds a default parameter for the default programmer set above (only).
-CONFIG_DEFAULT_PROGRAMMER_ARGS ?= ''
+CONFIG_DEFAULT_PROGRAMMER_ARGS ?= 'gpiol=HHHH'
 # Example: compiling with
 #   make CONFIG_DEFAULT_PROGRAMMER=PROGRAMMER_SERPROG CONFIG_DEFAULT_PROGRAMMER_ARGS="dev=/dev/ttyUSB0:1500000"
 # would make executing './flashrom' (almost) equivialent to './flashrom -p serprog:dev=/dev/ttyUSB0:1500000'.
